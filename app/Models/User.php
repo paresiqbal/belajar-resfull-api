@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use HasFactory;
+    protected $table = "users";
+    protected $primaryKey = "id";
+    protected $keyType = "int";
+    public $timestamps = true;
+    public $incrementing = true;
 }
