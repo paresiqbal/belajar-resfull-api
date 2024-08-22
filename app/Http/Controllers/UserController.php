@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -29,5 +31,11 @@ class UserController extends Controller
         $user->save();
 
         return new UserResource($user);
+    }
+
+    public function login(UserLoginRequest $request): JsonResponse
+    {
+        $data =  $request->validated();
+        $user = User::where("username", $data["username"])->first();
     }
 }
