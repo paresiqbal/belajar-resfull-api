@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    // register a new user
     public function register(UserRegisterRequest $request): UserResource
     {
         $data  = $request->validated();
