@@ -37,5 +37,14 @@ class UserController extends Controller
     {
         $data =  $request->validated();
         $user = User::where("username", $data["username"])->first();
+        if (!$user || Hash::check($data["password"], $user->password) == false) {
+            throw new HttpResponseException(response([
+                "errors" => [
+                    "message" => [
+                        "Username or Password wrong.",
+                    ],
+                ],
+            ], 401));
+        }
     }
 }
