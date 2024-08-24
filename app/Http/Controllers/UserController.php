@@ -33,7 +33,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function login(UserLoginRequest $request): JsonResponse
+    public function login(UserLoginRequest $request): JsonResponse // still error work to do
     {
         $data =  $request->validated();
         $user = User::where("username", $data["username"])->first();
