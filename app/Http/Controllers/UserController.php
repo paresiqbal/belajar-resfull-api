@@ -7,6 +7,7 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str; // Import the Str class
 
@@ -50,5 +51,10 @@ class UserController extends Controller
         $user->save();
 
         return new UserResource($user);
+    }
+
+    public function get(Request $request): UserResource
+    {
+        return new UserResource($request->user());
     }
 }
