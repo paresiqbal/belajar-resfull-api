@@ -7,8 +7,8 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str; // Import the Str class
 
 class UserController extends Controller
 {
@@ -33,7 +33,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function login(UserLoginRequest $request): JsonResponse // still error work to do
+    public function login(UserLoginRequest $request): UserResource
     {
         $data =  $request->validated();
         $user = User::where("username", $data["username"])->first();
@@ -46,5 +46,9 @@ class UserController extends Controller
                 ],
             ], 401));
         }
+        $user->token = Str::uuid()->toString();
+        $user->save();
+
+        return new UserResource($user);
     }
 }
